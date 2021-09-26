@@ -1,0 +1,246 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.10.2
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+<img src="https://maltem.com/wp-content/uploads/2020/04/LOGO_MALTEM.png" style="float: left; margin: 20px; height: 55px"> 
+
+<br>
+<br>
+<br>
+<br>
+
+## Lab: SQL Practice
+
+_Author: Mahesh
+
+
+### Required Preparation
+
+In order to run SQL queries within Python/this Jupyter notebook, you will need to install the following:
+
+```bash
+conda install sqlalchemy
+conda install psycopg2
+```
+
+If you get an error trying to install `psycopg2`, you can install a stand-alone package (sufficient for everything you'll need to complete this lab) by entering the following anywhere in the terminal: 
+
+```bash 
+pip install psycopg2-binary
+```
+
+(If `pip` doesn't work for you, try `pip3 install psycopg2-binary`.)
+
+
+### Instructions
+
+In this lab, you're going to have ten prompts. Each prompt will require you to do two things:
+1. Write a SQL query.
+2. Use the result of that query to answer the question.
+
+The purpose of this lab is to get you to practice your SQL - an **important** skill in data science! While it is possible to get these answers using Pandas, it should be your goal to do everything only in SQL.
+
+**Data**: The data used in this lab is the Iowa liquor database. It contains various tables of transactions. The schema for this database is here:
+
+<img src="./images/schema.png" alt="schema" width="750"/>
+
+```{python}
+# Import Pandas and Create_Engine
+
+import pandas as pd
+from sqlalchemy import create_engine
+
+# Set up the engine to access the data.
+engine = create_engine('postgresql://analytics_student:analyticsga@analyticsga-psql.generalassemb.ly:5432/iowa_liquor_sales_database')
+```
+
+### Prompt 1
+
+How many rows are there in the `stores` table of the Iowa liquor database?
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 1 Answer**:
+
+
+### Prompt 2
+
+If you sort the stores in alphabetical order by name, which store is fourth?
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 2 Answer**:
+
+
+### Prompt 3
+
+Among those sales whose category name is `IMPORTED VODKA`, if you sort by vendor in alphabetical order, what is the bottle price and number of bottles bought in the first 3 transactions?
+> You should give us three sets of numbers - one for each transaction.
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 3 Answer**: 
+
+
+
+### Prompt 4
+
+What is the total amount of liquor sold in February 2015?
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 4 Answer**:
+
+
+### Prompt 5
+
+Among all transactions where `IMPORTED VODKA` was sold, which vendor has the most transactions? Report the total number of transactions, the number of bottles sold, and the total amount of revenue from these transactions. Rename the columns to make sure there isn't any confusion as to what they mean!
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 5 Answer**: 
+
+
+### Prompt 6
+
+The reason we sell things is to make money. In sales, the term **markup** means the amount of extra money charged for a product over the cost to make that product. (You can think of the markup as the profit for that product.)
+
+In Iowa, the law states the minimum price at which liquor may be sold.
+
+Calculate the markup (name this `Markup`) that shows the difference between the `btl_price` and the `state_btl_cost`. 
+
+> If you haven't subtracted columns together before, [this StackOverflow question](https://stackoverflow.com/questions/7536996/multiplying-two-columns-in-sql-server/7537059) may be helpful.
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+### Prompt 7
+
+Calculate the "Percentage Markup" by dividing markup by the state bottle cost. (Rather than the total profit per bottle, this will tell you how much stores are increasing their price over the state minimum.)
+
+After calculating the "Percentage Markup," calculate the average percentage markup per **store**. Which store has the largest average markup, and what is that average markup?
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 7 Answer**: 
+
+
+### Prompt 8
+
+Building off of your last query, retrieve the five stores with the highest average markup percentage. Along with the store IDs and average markup percentage, please return the minimum and maximum markup percentage for those stores, as well as the names and addresses of those store.
+
+What are the names of the five stores?
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 8 Answer**:
+
+
+### Prompt 9
+
+Which nine counties sell the highest number of bottles of liquor per capita (per person)? Calculate the average bottle size of the bottles of liquor sold by these counties rounded to the nearest first decimal place. Of the nine counties selling the highest number of bottles of liquor per capita, which county sells (on average) the largest bottle size?
+
+**_BONUS FUN_**: This question can (also) be solved with a SQL subquery - that is, a query that queries a query! If you'd like to give this a try, you can read more about it [here](https://www.dofactory.com/sql/subquery). Otherwise, keep an eye out for the solution key!
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 9 Answer**:
+
+
+### Prompt 10 (advanced but required!)
+
+In the `sales` table, three columns are `btl_price`, `bottle_qty`, and `total`. The `total` for a transaction _should be_ the product of `btl_price` and `bottle_qty`. How many transactions have a value of `total` that is not equal to `btl_price` time `bottle_qty`?
+
+> There will be a type error as well! We cannot compare type `money` to type `real`. We have to convert `total` to type `money` so that we can compare the two directly. [This link](https://docs.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql?view=sql-server-ver15#syntax) may be helpful to you!
+
+```{python}
+# Use a SQL query to find the answer to the above prompt.
+
+sql = """
+
+"""
+
+pd.read_sql_query(sql, engine)
+```
+
+**Prompt 10 Answer**:
